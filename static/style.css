@@ -1,0 +1,251 @@
+/* static/style.css */
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(45deg, #FF6B6B, #6BFF6B, #6B6BFF, #FF6BFF);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s infinite;
+    color: white;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(214, 25, 25, 0.1); /* Slightly transparent white */
+    border-radius: 10px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 80%;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3e8e41;
+}
+
+/* Chat Styles */
+.chat-container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 20px;
+    color: white;
+}
+
+#chat-log {
+    height: 300px;
+    overflow-y: scroll;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.message {
+    padding: 8px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    word-wrap: break-word; /* Handles long words */
+}
+
+.message.user {
+    background-color: #007bff;
+    color: white;
+    text-align: right;
+}
+
+.message.bot {
+    background-color: #6c757d;
+    color: white;
+    text-align: left;
+}
+
+.input-area {
+    display: flex;
+}
+
+.input-area input[type="text"] {
+    flex-grow: 1;
+    margin-bottom: 0; /* Override container style */
+    margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container, .chat-container {
+        width: 95%;
+        margin: 10px auto;
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    .input-area {
+        flex-direction: column;
+    }
+
+    .input-area input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #chat-log {
+        height: 200px;
+    }
+}
+/* static/style.css (add this to the existing file) */
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+/* Add to static/style.css */
+#start-recording {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px; /* Add some space between buttons */
+}
+
+#start-recording:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+#start-recording:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+.links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.links li {
+    margin-bottom: 5px;
+}
+
+.links a {
+    color: #007bff; /* Link color */
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.images {
+    margin-top: 10px;
+}
+
+.images img {
+    max-width: 200px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+.message.bot button {
+    margin-top: 10px; /* Add some space above the button */
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.message.bot button:hover {
+    background-color: #0056b3;
+}
+
+.links ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.links li {
+    margin-bottom: 5px;
+}
+
+.links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+.images {
+    margin-top: 10px;
+}
+
+.images img {
+    max-width: 200px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    padding: 5px;
+}
+/* Add to static/style.css */
+.feedback-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.feedback-button a {
+    padding: 10px 20px;
+    background-color: #6c757d; /* Grey color */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.feedback-button a:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+}

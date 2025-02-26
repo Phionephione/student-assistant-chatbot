@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <h1>Contact Us</h1>
+        <p>For any questions or concerns, please contact us using the information below:</p>
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:support@example.com">support@example.com</a></li>
+            <li><strong>Contact No:</strong>+91 7019432845</li>
+            <li><strong>Admin's Name:</strong>KISHORE G </li>
+        </ul>
+        <p>We are here to help!</p>
+        <a href="{{ url_for('chat') }}">Back to Chat</a> <!-- Added back to chat button -->
+    </div>
+</body>
+</html>

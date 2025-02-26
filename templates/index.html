@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to EDU-BOT</h1>
+        <p>Enter your name to get started:</p>
+        <form method="POST">
+            <input type="text" name="name" placeholder="Your Name" required>
+            <button type="submit">Get Started</button>
+        </form>
+    </div>
+</body>
+</html>
