@@ -1,5 +1,4 @@
-/* static/style.css */
-
+/* static/style.css - FINAL CORRECTED VERSION */
 body {
     font-family: sans-serif;
     margin: 0;
@@ -8,6 +7,13 @@ body {
     background-size: 400% 400%;
     animation: gradientAnimation 15s infinite;
     color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container, .chat-container {
+    flex-grow: 1;
 }
 
 @keyframes gradientAnimation {
@@ -26,7 +32,7 @@ body {
     max-width: 600px;
     margin: 50px auto;
     padding: 20px;
-    background-color: rgba(214, 25, 25, 0.1); /* Slightly transparent white */
+    background-color: rgba(255, 255, 255, 0.1);
     border-radius: 10px;
     text-align: center;
 }
@@ -51,13 +57,14 @@ input[type="text"] {
 }
 
 button {
-    padding: 10px 20px;
+    padding: 12px 20px;
     font-size: 1em;
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 button:hover {
@@ -72,6 +79,8 @@ button:hover {
     border-radius: 10px;
     padding: 20px;
     color: white;
+    display: flex;
+    flex-direction: column;
 }
 
 #chat-log {
@@ -81,13 +90,14 @@ button:hover {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 5px;
     margin-bottom: 10px;
+    flex-grow: 1;
 }
 
 .message {
     padding: 8px;
     margin-bottom: 8px;
     border-radius: 5px;
-    word-wrap: break-word; /* Handles long words */
+    word-wrap: break-word;
 }
 
 .message.user {
@@ -104,12 +114,48 @@ button:hover {
 
 .input-area {
     display: flex;
+    align-items: center;
 }
 
 .input-area input[type="text"] {
     flex-grow: 1;
-    margin-bottom: 0; /* Override container style */
+    margin-bottom: 0;
     margin-right: 10px;
+}
+
+#start-recording {
+    margin-right: 10px;
+}
+
+#send-button {
+    padding-left: 35px;
+    padding-right: 35px;
+}
+
+.error {
+    color: red;
+    margin-bottom: 10px;
+}
+
+/* Footer Style */
+footer {
+    text-align: center;
+    padding: 20px 0;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9em;
+    width: 100%;
+}
+
+/* Styling for the portfolio link in the footer */
+footer a {
+    color: #ffffff;
+    text-decoration: underline;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+footer a:hover {
+    color: #d1d1d1;
 }
 
 /* Responsive Design */
@@ -131,121 +177,19 @@ button:hover {
     .input-area input[type="text"] {
         width: 100%;
         margin-bottom: 10px;
+        margin-right: 0;
+    }
+    
+    .button-group {
+        display: flex;
+        width: 100%;
+    }
+
+    .button-group button {
+        flex-grow: 1;
     }
 
     #chat-log {
-        height: 200px;
+        height: 40vh;
     }
-}
-/* static/style.css (add this to the existing file) */
-.error {
-    color: red;
-    margin-bottom: 10px;
-}
-/* Add to static/style.css */
-#start-recording {
-    padding: 10px 20px;
-    font-size: 1em;
-    background-color: #007bff; /* Blue color */
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 10px; /* Add some space between buttons */
-}
-
-#start-recording:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-}
-
-#start-recording:disabled {
-    background-color: #cccccc;
-    cursor: not-allowed;
-}
-.links ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.links li {
-    margin-bottom: 5px;
-}
-
-.links a {
-    color: #007bff; /* Link color */
-    text-decoration: none;
-}
-
-.links a:hover {
-    text-decoration: underline;
-}
-
-.images {
-    margin-top: 10px;
-}
-
-.images img {
-    max-width: 200px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    padding: 5px;
-}
-.message.bot button {
-    margin-top: 10px; /* Add some space above the button */
-    padding: 5px 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.message.bot button:hover {
-    background-color: #0056b3;
-}
-
-.links ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.links li {
-    margin-bottom: 5px;
-}
-
-.links a {
-    color: #007bff;
-    text-decoration: none;
-}
-
-.links a:hover {
-    text-decoration: underline;
-}
-
-.images {
-    margin-top: 10px;
-}
-
-.images img {
-    max-width: 200px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    padding: 5px;
-}
-/* Add to static/style.css */
-.feedback-button {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.feedback-button a {
-    padding: 10px 20px;
-    background-color: #6c757d; /* Grey color */
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.feedback-button a:hover {
-    background-color: #5a6268; /* Darker grey on hover */
 }

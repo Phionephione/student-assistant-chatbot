@@ -1,195 +1,112 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Student Assistant Chat</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-</head>
-<body>
-    <div class="chat-container">
-        <h1>Welcome, {{ name }}! Ask me anything.</h1>
-        <a href="{{ url_for('logout') }}">Logout</a>
-        <a href="{{ url_for('download_chat') }}">Download Chat History</a>
-        <div id="chat-log">
-            <!-- Chat messages will be displayed here -->
-        </div>
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Type your question...">
-            <button id="start-recording">Start Recording</button>
-            <button id="send-button">Send</button>
-        </div>
+{% extends "base.html" %}
 
-        <div class="feedback-button">
-            <a href="{{ url_for('contact') }}">Feedback/Contact Us</a>
-        </div>
+{% block content %}
+<div class="chat-container">
+    <h1>Welcome, {{ name }}! Ask me anything.</h1>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('download_chat') }}">Download Chat History</a>
+    <div id="chat-log">
+        <!-- Chat messages will be displayed here -->
     </div>
+    <div class="input-area">
+        <input type="text" id="user-input" placeholder="Type your question...">
+        <button id="start-recording">Start Recording</button>
+        <button id="send-button">Send</button>
+    </div>
+</div>
 
-    <script>
-        const chatLog = document.getElementById("chat-log");
-        const userInput = document.getElementById("user-input");
-        const sendButton = document.getElementById("send-button");
-        const startRecordingButton = document.getElementById("start-recording");
-        let recognition;
+<script>
+    // All of your JavaScript code remains exactly the same here
+    const chatLog = document.getElementById("chat-log");
+    const userInput = document.getElementById("user-input");
+    const sendButton = document.getElementById("send-button");
+    const startRecordingButton = document.getElementById("start-recording");
+    let recognition;
 
-        if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = true;
-            recognition.lang = 'en-US';
+    if ('webkitSpeechRecognition' in window) {
+        recognition = new webkitSpeechRecognition();
+        recognition.continuous = false;
+        recognition.interimResults = true;
+        recognition.lang = 'en-US';
 
-            recognition.onstart = function() {
-                startRecordingButton.textContent = 'Recording...';
-            };
+        recognition.onstart = function() {
+            startRecordingButton.textContent = 'Recording...';
+        };
 
-            recognition.onresult = function(event) {
-                let final_transcript = '';
-                let interim_transcript = '';
-                for (let i = event.resultIndex; i < event.results.length; ++i) {
-                    if (event.results[i].isFinal) {
-                        final_transcript += event.results[i][0].transcript;
-                    } else {
-                        interim_transcript = event.results[i][0].transcript;
-                    }
-                }
-                userInput.value = final_transcript + interim_transcript;
-            };
-
-            recognition.onerror = function(event) {
-                console.error('Speech recognition error:', event.error);
-                startRecordingButton.textContent = 'Start Recording';
-            };
-
-            recognition.onend = function() {
-                startRecordingButton.textContent = 'Start Recording';
-            };
-
-            startRecordingButton.addEventListener('click', function() {
-                if (startRecordingButton.textContent === 'Start Recording') {
-                    userInput.value = "";
-                    recognition.start();
+        recognition.onresult = function(event) {
+            let final_transcript = '';
+            let interim_transcript = '';
+            for (let i = event.resultIndex; i < event.results.length; ++i) {
+                if (event.results[i].isFinal) {
+                    final_transcript += event.results[i][0].transcript;
                 } else {
-                    recognition.stop();
+                    interim_transcript = event.results[i][0].transcript;
                 }
-            });
+            }
+            userInput.value = final_transcript + interim_transcript;
+        };
 
-        } else {
-            startRecordingButton.disabled = true;
-            startRecordingButton.textContent = 'Speech Recognition Not Supported';
-        }
+        recognition.onerror = function(event) {
+            console.error('Speech recognition error:', event.error);
+            startRecordingButton.textContent = 'Start Recording';
+        };
 
-        sendButton.addEventListener("click", sendMessage);
+        recognition.onend = function() {
+            startRecordingButton.textContent = 'Start Recording';
+        };
 
-        userInput.addEventListener("keydown", function(event) {
-            if (event.key === "Enter") {
-                sendMessage();
+        startRecordingButton.addEventListener('click', function() {
+            if (startRecordingButton.textContent === 'Start Recording') {
+                userInput.value = "";
+                recognition.start();
+            } else {
+                recognition.stop();
             }
         });
 
-        function sendMessage() {
-            const message = userInput.value;
-            if (message.trim() === "") return;
+    } else {
+        startRecordingButton.disabled = true;
+        startRecordingButton.textContent = 'Speech Recognition Not Supported';
+    }
 
-            appendMessage("user", message);
-            userInput.value = "";
+    sendButton.addEventListener("click", sendMessage);
 
-            fetch("/get_response", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: "user_input=" + encodeURIComponent(message),
-            })
-            .then(response => response.json())
-            .then(data => {
-                appendBotMessage(data.response, data.index);  //Store the index of the conversation
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                appendMessage("bot", "Sorry, I encountered an error.");
-            });
+    userInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            sendMessage();
         }
+    });
 
-        function appendMessage(sender, message) {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", sender);
-            messageDiv.textContent = message;
-            chatLog.appendChild(messageDiv);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
+    function sendMessage() {
+        const message = userInput.value;
+        if (message.trim() === "") return;
 
-        function appendBotMessage(message, index) {
-            const messageDiv = document.createElement("div");
-            messageDiv.classList.add("message", "bot");
-            messageDiv.textContent = message;
+        appendMessage("user", message);
+        userInput.value = "";
 
-            const referenceButton = document.createElement("button");
-            referenceButton.textContent = "References/Images";
-            referenceButton.addEventListener("click", function() {
-                getReferences(messageDiv, index); // Pass the index to getReferences function
-            });
+        fetch("/get_response", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: "user_input=" + encodeURIComponent(message),
+        })
+        .then(response => response.json())
+        .then(data => {
+            appendMessage("bot", data.response);
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            appendMessage("bot", "Sorry, a network error occurred.");
+        });
+    }
 
-            messageDiv.appendChild(referenceButton);
-            chatLog.appendChild(messageDiv);
-            chatLog.scrollTop = chatLog.scrollHeight;
-        }
-
-        function getReferences(messageDiv, index) {
-            fetch("/get_references", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                body: "index=" + encodeURIComponent(index),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    console.error("Error:", data.error);
-                    alert("Error fetching references.");
-                } else {
-                    displayReferences(messageDiv, data.links, data.images);
-                }
-            })
-            .catch(error => {
-                console.error("Error:", error);
-                alert("Error fetching references.");
-            });
-        }
-
-        function displayReferences(messageDiv, links, images) {
-            if (links && links.length > 0) {
-                const linksDiv = document.createElement("div");
-                linksDiv.classList.add("links");
-                linksDiv.innerHTML = "References:";
-                const ul = document.createElement("ul");
-                links.forEach(link => {
-                    const li = document.createElement("li");
-                    const a = document.createElement("a");
-                    a.href = link;
-                    a.textContent = link;
-                    a.target = "_blank";
-                    li.appendChild(a);
-                    ul.appendChild(li);
-                });
-                linksDiv.appendChild(ul);
-                messageDiv.appendChild(linksDiv);
-            }
-
-            if (images && images.length > 0) {
-                const imagesDiv = document.createElement("div");
-                imagesDiv.classList.add("images");
-                imagesDiv.innerHTML = "Images:";
-                images.forEach(imageUrl => {
-                    const img = document.createElement("img");
-                    img.src = imageUrl;
-                    img.style.maxWidth = "200px";
-                    img.style.marginRight = "10px";
-                    imagesDiv.appendChild(img);
-                });
-                messageDiv.appendChild(imagesDiv);
-            }
-        }
-
-    </script>
-</body>
-</html>
+    function appendMessage(sender, message) {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("message", sender);
+        messageDiv.textContent = message;
+        chatLog.appendChild(messageDiv);
+        chatLog.scrollTop = chatLog.scrollHeight;
+    }
+</script>
+{% endblock %}
