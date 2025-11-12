@@ -14,7 +14,7 @@ GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
 try:
     genai.configure(api_key=GOOGLE_API_KEY)
-    model = genai.GenerativeModel('gemini-1.5-flash') # Use the correct model name for your key
+    model = genai.GenerativeModel('gemini-1.5-pro') # Use the correct model name for your key
     print("Gemini API Initialized Successfully.")
 except Exception as e:
     print(f"FATAL ERROR: Could not initialize Gemini API: {e}")
